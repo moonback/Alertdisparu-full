@@ -11,7 +11,135 @@ function getDaysSinceDisappearance($disappearanceDate) {
 }
 
 ?>
+<style>
+  a.as_button.d-flex.btn-orange {
+    text-align: center;
+    font-size: 15px;
+  }
 
+  /* Styles communs */
+  .container-text {
+    cursor: pointer;
+  }
+
+  /* Style du champ de recherche */
+  .search-bar {
+    width: 100%;
+    max-width: 400px;
+    /* Vous pouvez ajuster la largeur maximale selon vos préférences */
+    padding: 10px;
+    border: 2px solid #ccc;
+    border-radius: 5px;
+    outline: none;
+    font-size: 16px;
+    transition: border-color 0.3s;
+    color: #1389e7;
+  }
+
+  /* Style du champ de recherche lorsqu'il est en focus (clic) */
+  .search-bar:focus {
+    border-color: #007bff;
+    /* Couleur de bordure lorsqu'en focus */
+  }
+
+  .container-image {
+    position: relative;
+    width: 100%;
+    height: 400px;
+    /* Ajustez la hauteur selon vos besoins */
+    background-size: cover;
+    background-position: center;
+    margin-bottom: 20px;
+  }
+
+  .overlay {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.5);
+    /* Couleur de l'overlay avec une opacité */
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    color: #fff;
+    /* Couleur du texte sur l'overlay */
+    text-align: center;
+  }
+
+  .image-text {
+    margin: 0;
+    padding: 10px;
+    position: absolute;
+    top: 10px;
+    /* Ajustez la position verticale du texte */
+    left: 50%;
+    /* Centrez horizontalement */
+    transform: translateX(-50%);
+    /* Centrez horizontalement */
+    background-color: rgba(0, 0, 0, 0.7);
+    /* Couleur de fond du texte */
+    border-radius: 5px;
+    padding: 5px 10px;
+    font-size: 14px;
+  }
+
+  .overlay strong {
+    font-weight: bold;
+    font-size: 18px;
+  }
+
+  /* Styles généraux */
+  .container {
+    max-width: 1200px;
+    margin: auto;
+  }
+
+  .row {
+    display: flex;
+  }
+
+  .no-gutters {
+    margin: 0;
+    padding: 0;
+  }
+
+  .center-text {
+    text-align: center;
+  }
+
+  /* Styles spécifiques à cette section */
+  .about {
+    padding: 50px 0;
+  }
+
+  .content {
+    padding: 20px;
+  }
+
+  .content-inner {
+    background-color: #f9f9f9;
+    padding: 30px;
+    border-radius: 8px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  }
+
+  .description {
+    animation: fadeIn 1s ease-in-out;
+  }
+
+  @keyframes fadeIn {
+    from {
+      opacity: 0;
+    }
+
+    to {
+      opacity: 1;
+    }
+  }
+</style>
 <!-- Inclure jQuery avant Bootstrap -->
 <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"
@@ -31,14 +159,14 @@ function getDaysSinceDisappearance($disappearanceDate) {
         <div class="container container-text align-items-center d-flex">
           <div>
             <h1 class="white">
-              La disparition, c’est pas <br>
+              Retrouver les Disparus, <br>
               <span class="orange-white-rect"><span class="orange-white-rect blink"><span>
-                    une fiction !
+                    Notre Mission !
                   </span></span></span>
             </h1>
-            <p class="big white">Plateforme d’urgence gratuit accessible 24h/24 et 7j/7 en cas de disparition d'adulte
-              et enfant.
-            </p>
+            <p class="big white">Une plateforme d’urgence gratuite, accessible 24h/24 et 7j/7, pour retrouver les
+              adultes et les enfants disparus.</p>
+
             <div class="d-flex flex-wrap">
               <a class="as_button btn-orange d-flex" href="/signalements.php" title="Signaler une disparition">
                 <svg xmlns="http://www.w3.org/2000/svg" width="22.711" height="22.709" viewBox="0 0 22.711 22.709">
@@ -84,9 +212,13 @@ function getDaysSinceDisappearance($disappearanceDate) {
   </a>
 </section>
 
+
 <main id="main">
 
   <style>
+    .section-bg2 {
+    background-color: #2e5771;
+}
     .card img:hover {
       opacity: .9;
     }
@@ -121,7 +253,7 @@ function getDaysSinceDisappearance($disappearanceDate) {
 
 
 
-<section class="bg-blueDark">
+  <section class="bg-blueDark">
     <div class="container-fluid">
       <div>
         <h2 class="white text-center">
@@ -129,6 +261,14 @@ function getDaysSinceDisappearance($disappearanceDate) {
                 personnes disparues ?
               </span></span></span>
         </h2>
+        <div>
+          <p class="white text-center">
+            Le temps est crucial pour retrouver des personnes disparues. Cette section présente les disparitions
+            récentes avec des détails clés : date, dernier lieu connu, description physique. Votre vigilance est vitale.
+            Utilisez notre plateforme pour signaler tout indice ou apparition à l'aide des fonctionnalités de
+            géolocalisation et d'alerte, et contribuez à sauver des vies.
+          </p>
+        </div>
       </div>
     </div>
 
@@ -161,34 +301,64 @@ function getDaysSinceDisappearance($disappearanceDate) {
           <div class="col-lg-4 col-md-6 col-12 mb-5 pb-4">
             <div class="ps-3 h-100">
               <div class="container-text d-flex justify-content-start align-items-start flex-column h-100 open-popup">
-                <div class="container-image" style="background-image:url(https://placehold.co/600x400)">
+                <div class="container-image" style="background-image:url(/images-missing/rom4.jpg)">
+                  <div class="overlay">
+                    <p class="image-text">Rechercher par :</p>
+                    <strong class="listing-recherche"><?= htmlspecialchars($row['agency_enforcement']) ?></strong>
+                  </div>
                 </div>
+
                 <!--<div class="container-image"
                                         style="background-image:url(images-missing/<?= $images[0] ?>)">
                                         </div>-->
                 <div class="pb-5 px-3">
-                <span class="orange-white-rect blink"><span>
-  <?= htmlspecialchars($row['status']) ?> le <?= (new DateTime($row['disappearance_date']))->format('d/m/Y') ?>
-</span></span> </span></span><br>
-<h3 class="mt-2"><?= htmlspecialchars($row['name']) ?></h3>
-<p class="bodytext"><?= htmlspecialchars($row['gender']) ?>, <?= htmlspecialchars($row['race']) ?>
- né(e) le
-  <?= (new DateTime($row['dob']))->format('d/m/Y') ?> avait <?= $ageAtDisappearance ?> ans au moment des faits, <?= $age ?> ans actuellement,
-  <?= htmlspecialchars($row['height']) ?>, <?= htmlspecialchars($row['weight']) ?></p>
-  <p class="bodytext">Jours depuis la disparition : <?= $daysSinceDisappearance ?> jours</p>
 
-  <br>
-<p class="bodytext">De <?= htmlspecialchars($row['city_from']) ?> – Disparu à
-  <?= htmlspecialchars($row['last_location']) ?></p>
-<p></p>
-</div>
+                  <span class="orange-white-rect blink">
+
+                    <span>
+                      <?php
+$status = htmlspecialchars($row['status']);
+if ($status === 'Missing') {
+    $statusText = 'Disparu';
+} elseif ($status === 'Found') {
+    $statusText = 'Retrouvé';
+} else {
+    $statusText = $status; // Utilisation du statut tel quel s'il est différent de "Missing" ou "Found"
+}
+?>
+
+                      <?= $statusText ?> le <?= (new DateTime($row['disappearance_date']))->format('d/m/Y') ?>
+                    </span>
+
+                  </span>
+
+                  <br>
+                  <h3><?= htmlspecialchars($row['name']) ?></h3>
+                  <p class="bodytext"><?= htmlspecialchars($row['gender']) ?>, <?= htmlspecialchars($row['race']) ?>,
+                    <?= htmlspecialchars($row['height']) ?>, <?= htmlspecialchars($row['weight']) ?></p>
+                  <p class="bodytext">Né(e) le : <?= (new DateTime($row['dob']))->format('d/m/Y') ?> (<?= $age ?> ans)
+                  </p>
+                  <p class="bodytext">Disparu(e) le : <?= (new DateTime($row['disappearance_date']))->format('d/m/Y') ?>
+                    avait <?= $ageAtDisappearance ?> ans</p>
+                  <br>
+                  <p class="bodytext">De <?= htmlspecialchars($row['city_from']) ?>
+                  </p>
+                  <p>Disparu à
+                    <span class="show-map-btn" data-toggle="modal" data-target="#mapModal"
+                      data-location="<?= htmlspecialchars($row['last_location']) ?>">
+                      <strong> <?= htmlspecialchars($row['last_location']) ?></strong>
+                    </span></p>
+                </div>
                 <div class="d-flex container-button justify-content-center">
                   <a href="view_posted.php?posted_Id=<?= intval($row['post_Id']) ?>" target=""
                     class="as_button d-flex btn-red">
-                    Voir le signalement </a>
+                    <div class="button-text">Voir le profil</div>
+                  </a>
                   <a href="#" rel="noopener noreferrer" target="_blank" class="as_button d-flex btn-orange">
-                    Enquêter </a>
+                    <div class="button-text">Signaler une information</div>
+                  </a>
                 </div>
+
               </div>
             </div>
           </div>
@@ -202,6 +372,7 @@ function getDaysSinceDisappearance($disappearanceDate) {
 
     </div>
   </section>
+
 
 
 
@@ -230,13 +401,97 @@ function getDaysSinceDisappearance($disappearanceDate) {
 
 
 
+  <section class="bg-blueDark home-alert px-3"
+    style="background-image: url(https://www.116000enfantsdisparus.fr/wp-content/themes/custom/assets/images/notif.png); background-size: auto 85%; background-position: top center;background-repeat: no-repeat;">
+    <h2 class="white text-center">Soyez <span class="orange-white-rect"><span>alertés</span></span></h2>
+    <p class="white text-center">Soyez alertés par mail lorsque de nouveaux avis de recherche sont publiés.</p>
+    <div class="d-flex input-zone">
+      <form id="sib_signup_form_2" method="post" class="sib_signup_form">
+        <div class="sib_loader" style="display:none;"><img
+            src="https://www.116000enfantsdisparus.fr/wp-includes/images/spinner.gif" alt="loader"></div>
+        <input type="hidden" name="sib_form_action" value="subscribe_form_submit">
+        <input type="hidden" name="sib_form_id" value="2">
+        <input type="hidden" name="sib_form_alert_notice" value="Remplissez ce champ s’il vous plaît">
+        <input type="hidden" name="sib_security" value="c4c9935ae6">
+        <div class="sib_signup_box_inside_2">
+          <div style="/*display:none*/" class="sib_msg_disp">
+          </div>
+          <input type="email" class="sib-email-area" name="email" required="required" placeholder="Votre adresse email">
+          <button type="submit" class="sib-default-btn with-arrow-effect">
+            <span class="text-button">S'inscrire</span>
+            <span class="arrow-effect push-element-fff"><span><svg xmlns="http://www.w3.org/2000/svg" width="18.741"
+                  height="16.351" viewBox="0 0 18.741 16.351">
+                  <path id="Tracé_50" data-name="Tracé 50"
+                    d="M181.746,289.686V276.4l-4.717,4.745-2.03-2.03,8.176-8.176,8.176,8.176-2.03,2.03-4.717-4.745v13.281Z"
+                    transform="translate(289.686 -175) rotate(90)" fill="#fff"></path>
+                </svg></span></span>
+          </button>
+        </div>
+      </form>
+      <style>
+        form#sib_signup_form_2 p.sib-alert-message {
+          padding: 6px 12px;
+          margin-bottom: 20px;
+          border: 1px solid transparent;
+          border-radius: 4px;
+          -webkit-box-sizing: border-box;
+          -moz-box-sizing: border-box;
+          box-sizing: border-box;
+        }
+
+        form#sib_signup_form_2 p.sib-alert-message-error {
+          background-color: #f2dede;
+          border-color: #ebccd1;
+          color: #a94442;
+        }
+
+        form#sib_signup_form_2 p.sib-alert-message-success {
+          background-color: #dff0d8;
+          border-color: #d6e9c6;
+          color: #3c763d;
+        }
+
+        form#sib_signup_form_2 p.sib-alert-message-warning {
+          background-color: #fcf8e3;
+          border-color: #faebcc;
+          color: #8a6d3b;
+        }
+
+        .homepage .home-alert .input-zone {
+          max-width: 475px;
+          z-index: 2;
+        }
+
+        .input-zone {
+          justify-content: center;
+          align-items: center;
+          width: 100%;
+          max-width: 400px;
+          margin: auto;
+          position: relative;
+          background: #fff;
+          border-radius: 999px;
+          padding: 4px;
+        }
+
+        .d-flex {
+          display: flex !important;
+        }
+
+        * {
+          font-family: "Gantari", sans-serif;
+        }
+      </style>
+    </div>
+  </section>
 
   <!-- ======= Contact Section ======= -->
-  <section id="contact" class="contact section-bg">
+  <section id="contact" class="contact section-bg2">
     <div class="container" data-aos="fade-up">
 
       <div class="section-title">
-        <h2>Nous contacter</h2>
+        <h2 class="white text-center">Nous <span class="orange-white-rect"><span>contacter</span></span></h2>
+
         <p> <a/ style="color: #ffffff;">Si vous avez des questions ou souhaitez simplement nous contacter, vous pouvez
             nous contacter aux informations ci-dessous.
 

@@ -41,6 +41,7 @@
   <link rel="stylesheet" href="../css/daterangepicker.css">
   <!-- summernote -->
   <link rel="stylesheet" href="../css/summernote-bs4.min.css">
+  <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 
   <!-- BOOTSTRAP ICONS -->
   <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.8.1/font/bootstrap-icons.css">

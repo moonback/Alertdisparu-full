@@ -67,6 +67,18 @@
     padding-top: 7px;
     padding-bottom: 6px;
 }
+.center-container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh; /* 100% de la hauteur de la fenêtre de visualisation */
+}
+
+.login-form {
+    text-align: center;
+    /* Ajoutez d'autres styles ici si nécessaire */
+}
+
   </style>
 
 <section class="bg-blueDark">

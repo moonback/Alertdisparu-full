@@ -1,5 +1,5 @@
 <?php
-require_once '../config.php';
+require_once 'config-simi.php'; // Inclure le fichier de configuration pour la similarité
 require_once '../admin/navbar.php';
 
 // Configuration de l'affichage des erreurs pour le développement
@@ -8,7 +8,7 @@ ini_set('display_startup_errors', 1);
 error_reporting(E_ALL);
 
 // Chemin vers le fichier JSON de résultats
-$jsonFilePath = '../Python-ia/Similariter/results.json';
+$jsonFilePath = 'donnees2.json';
 
 // Vérification de l'existence du fichier JSON
 if (file_exists($jsonFilePath)) {
@@ -31,27 +31,30 @@ function getAlertLevel($similarity) {
     return 'bg-success text-white';
 }
 
-// Mise en cache des données JSON pour éviter de les recharger
-$profilesDataForJS = [];
-
 // Fonction pour rendre une carte de profil
 function render_card($profile, $similarities) {
     global $profilesDataForJS;
     
     $escapedProfile = htmlspecialchars($profile, ENT_QUOTES | ENT_HTML5, 'UTF-8');
     
-    // Trouver le profil le plus similaire (autre que le profil actuel)
-    $mostSimilarProfile = null;
-    $highestSimilarity = -1;
+    // Vérifier que $similarities est un tableau
+    if (is_array($similarities) && count($similarities) > 0) {
+        // Initialiser les variables pour le profil le plus similaire
+        $mostSimilarProfile = null;
+        $highestSimilarity = -1;
 
-    foreach ($similarities as $otherProfile => $similarityData) {
-        if ($otherProfile !== $profile) {
-            $similarity = $similarityData['similarity'];
-            if ($similarity > $highestSimilarity) {
-                $mostSimilarProfile = $otherProfile;
-                $highestSimilarity = $similarity;
+        foreach ($similarities as $otherProfile => $similarityData) {
+            if (is_array($similarityData)) { // Vérifier que $similarityData est un tableau
+                $similarity = $similarityData['similarity'];
+                if ($similarity > $highestSimilarity) {
+                    $mostSimilarProfile = $otherProfile;
+                    $highestSimilarity = $similarity;
+                }
             }
         }
+    } else {
+        $mostSimilarProfile = null;
+        $highestSimilarity = 0;
     }
     
     // Mettre en cache les données pour le graphique
@@ -67,8 +70,12 @@ function render_card($profile, $similarities) {
             <div class="card-body">
                 <canvas id="<?= $escapedProfile; ?>"></canvas>
                 <div class="mt-3 text-center">
-                    <h5>Profil le plus similaire: <?= htmlspecialchars($mostSimilarProfile, ENT_QUOTES | ENT_HTML5, 'UTF-8'); ?></h5>
-                    Similarité: <?= htmlspecialchars($highestSimilarity, ENT_QUOTES, 'UTF-8'); ?>, Level: <?= getAlertLevel($highestSimilarity); ?>
+                    <?php if ($mostSimilarProfile !== null): ?>
+                        <h5>Profil le plus similaire: <?= htmlspecialchars($mostSimilarProfile, ENT_QUOTES | ENT_HTML5, 'UTF-8'); ?></h5>
+                        Similarité: <?= htmlspecialchars($highestSimilarity, ENT_QUOTES, 'UTF-8'); ?>, Level: <?= getAlertLevel($highestSimilarity); ?>
+                    <?php else: ?>
+                        <p>Aucun profil similaire trouvé.</p>
+                    <?php endif; ?>
                 </div>
             </div>
         </div>
@@ -92,7 +99,7 @@ function render_card($profile, $similarities) {
 <div class="container mt-5">
     <h1 class="mb-5 text-center">Résultats de similarité</h1>
     <div class="row row-cols-1 row-cols-md-2 g-4">
-        <?php foreach ($data['data'] as $profile => $similarities): ?>
+        <?php foreach ($data as $profile => $similarities): ?>
             <?= render_card($profile, $similarities); ?>
         <?php endforeach; ?>
     </div>

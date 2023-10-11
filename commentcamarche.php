@@ -1,8 +1,4 @@
-<?php
-include 'config.php';
-include 'navbar.php';
-// include 'login.php';
-?>
+
 <!DOCTYPE html>
 <html lang="fr">
 
@@ -10,16 +6,51 @@ include 'navbar.php';
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Comment ça marche</title>
-    <link rel="stylesheet" href="path_to_your_stylesheet.css">
+    <style>
+        /* Styles généraux */
+        body {
+            font-family: Arial, sans-serif;
+            line-height: 1.6;
+        }
+
+        header, main, footer {
+            margin: 20px;
+            padding: 20px;
+        }
+
+        /* Styles spécifiques à PC */
+        @media only screen and (min-width: 768px) {
+            main {
+                display: grid;
+                grid-template-columns: 1fr 2fr;
+                gap: 20px;
+            }
+            section {
+                padding: 20px;
+                border: 1px solid #ccc;
+            }
+        }
+
+        /* Styles spécifiques à mobile */
+        @media only screen and (max-width: 767px) {
+            main {
+                display: block;
+            }
+            section {
+                padding: 10px;
+                border-bottom: 1px solid #ccc;
+            }
+        }
+    </style>
 </head>
 
 <body>
 
-    <header>
-        <nav>
-            <!-- Votre navigation ici -->
-        </nav>
-    </header>
+<?php
+include 'config.php';
+include 'navbar.php';
+// include 'login.php';
+?>
 
     <main>
         <section id="introduction">

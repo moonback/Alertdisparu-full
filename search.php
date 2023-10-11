@@ -1,49 +1,81 @@
-<!DOCTYPE html>
-<html lang="fr">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Recherche de personne disparue</title>
-</head>
-<body>
-    <form action="search.php" method="POST">
-        <label for="nom">Nom :</label>
-        <input type="text" name="nom" id="nom">
-        <br>
+<?php
+// Connexion à la base de données
+$conn = mysqli_connect("localhost", "root", "", "alertdisparu");
 
-        <label for="age">Âge :</label>
-        <input type="text" name="age" id="age">
-        <br>
+// Vérifiez si la connexion a réussi
+if (!$conn) {
+    die("Erreur de connexion : " . mysqli_connect_error());
+}
 
-        <label for="genre">Genre :</label>
-        <input type="text" name="genre" id="genre">
-        <br>
+// Initialisation de la requête SQL de base
+$query = "SELECT * FROM posted WHERE status='Missing'";
 
-        <label for="ville">Ville :</label>
-        <input type="text" name="ville" id="ville">
-        <br>
+// Traitement des critères de recherche
+if (isset($_POST['date_disparition']) && !empty($_POST['date_disparition'])) {
+    $date_disparition = mysqli_real_escape_string($conn, $_POST['date_disparition']);
+    $query .= " AND disappearance_date = '$date_disparition'";
+}
 
-        <label for="statut">Statut :</label>
-        <select name="statut" id="statut">
-            <option value="Missing">Disparu</option>
-            <option value="Found">Retrouvé</option>
-        </select>
-        <br>
+if (isset($_POST['localisation']) && !empty($_POST['localisation'])) {
+    $localisation = mysqli_real_escape_string($conn, $_POST['localisation']);
+    $query .= " AND city_from = '$localisation'";
+}
 
-        <input type="submit" value="Rechercher">
-    </form>
+if (isset($_POST['sexe']) && !empty($_POST['sexe'])) {
+    $sexe = mysqli_real_escape_string($conn, $_POST['sexe']);
+    $query .= " AND gender = '$sexe'";
+}
 
-    <?php
-    if ($_SERVER["REQUEST_METHOD"] == "POST") {
-        $nom = isset($_POST['nom']) ? $_POST['nom'] : '';
-        $age = isset($_POST['age']) ? $_POST['age'] : '';
-        $genre = isset($_POST['genre']) ? $_POST['genre'] : '';
-        $ville = isset($_POST['ville']) ? $_POST['ville'] : '';
-        $statut = isset($_POST['statut']) ? $_POST['statut'] : '';
+// Ajoutez d'autres critères de recherche ici en suivant le même modèle
 
-        // Utilisez ces valeurs pour effectuer la recherche ou l'affichage des résultats.
-        // Par exemple, vous pouvez construire une requête SQL pour rechercher dans votre base de données en utilisant ces valeurs.
+// Exécution de la requête SQL
+$result = mysqli_query($conn, $query);
+
+if (!$result) {
+    echo "Erreur lors de la recherche : " . mysqli_error($conn);
+} else {
+    // Stockez les résultats dans un tableau
+    $resultsArray = array();
+    while ($row = mysqli_fetch_assoc($result)) {
+        $resultsArray[] = $row;
     }
-    ?>
-</body>
-</html>
+}
+
+// Fermeture de la connexion à la base de données
+mysqli_close($conn);
+?>
+
+<!-- Options de tri pour les résultats -->
+<section class="sort-section">
+    <div class="container">
+        <label for="tri">Trier par :</label>
+        <select id="tri" name="tri">
+            <option value="date_disparition">Date de Disparition</option>
+            <option value="nom">Nom</option>
+            <!-- Ajoutez d'autres options de tri ici -->
+        </select>
+    </div>
+</section>
+
+<!-- Affichage des résultats -->
+<section class="results-section">
+    <div class="container">
+        <h2>Résultats de la recherche</h2>
+        <div class="results-list">
+            <?php
+            // Vérifiez si des résultats sont disponibles
+            if (!empty($resultsArray)) {
+                foreach ($resultsArray as $result) {
+                    echo "<div class='result'>";
+                    echo "<h3>Nom : " . htmlspecialchars($result['name']) . "</h3>";
+                    echo "<p>Date de Disparition : " . htmlspecialchars($result['disappearance_date']) . "</p>";
+                    echo "<p>Sexe : " . htmlspecialchars($result['gender']) . "</p>";
+                    // Ajoutez d'autres informations de résultat ici
+                    echo "</div>";
+                }
+            } else {
+                echo "Aucun résultat trouvé.";
+            }
+            ?>
+        </div>
+    </div>

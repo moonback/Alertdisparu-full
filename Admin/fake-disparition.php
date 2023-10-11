@@ -238,22 +238,77 @@ function generateRandomStatus() {
     return $status[array_rand($status)];
 }
 function generateRandomLastLocation() {
-    $streetNames = ['Main', 'High', 'Oak', 'Pine', 'Maple', 'Cedar', 'Elm'];
-    $streetTypes = ['St', 'Ave', 'Rd', 'Blvd', 'Ln', 'Dr'];
-    $cityNames = ['Paris', 'New York', 'Tokyo', 'London', 'Berlin', 'Sydney'];
-    $zipCodes = ['12345', '67890', '11223', '44556', '77889', '99880'];
+    $addresses = [
+        ' Hirson, Avenue De Verdun, 02500 Hirson',
+        ' St-Quentin, Cc Quentin De La Tour, 02100 Saint-quentin',
+        ' Viry Noureuil, Route Nationale 32, 02300 Viry-noureuil',
+        ' Montlucon Domérat, Cc Terre Neuve, Route De Gueret, 03410 Domerat',
+        ' Manosque, Quintrands, Route De Sisteron, 04100 Manosque',
+        ' Gap, 9, Route De Barcelonnette, 05000 Gap',
+        ' Grasse, La Paoute, 06130 Grasse',
+        ' Nice Cote D\'Azur, Cc Auchan - Route De Laghet, 06340 La Trinité',
+        ' Guilherand-Granges, Cc Auchan, Porte D\'ardeche, 07500 Guilherand-granges',
+        ' Aubagne-En-Provence, Cc Auchan Barneoud, 13400 Aubagne',
+        ' Marseille St-Loup, Cc Pont De Vivaux, 13010 Marseille',
+        ' Martigues, Cc Canto Perdrix, Route D\'istres, 13500 Martigues',
+        ' Cognac, Cc Auchan, Le Fief Du Roy, 16100 Châteaubernard',
+        ' Angoulême, Cc Auchan, Route De Bordeaux, 16400 La Couronne',
+        ' Ajaccio, Centre Commercial Atrium, 20167 Sarrola-carcopino',
+        ' Châtillon-Sur-Seine, Avenue Noel Navoizat, 21400 Chatillon-sur-seine',
+        ' Semur-En-Auxois, Voie Georges Pompidou, 21140 Semur-en-auxois',
+        ' Périgueux Marsac, Cc Auchan Perigueux, 24430 Marsac-sur-l\'isle',
+        ' Toulouse, Cc Espace Gramont, 31200 Toulouse',
+        ' Facture Biganos, Cc Auchan, 33380 Biganos',
+        ' Bordeaux-Lac, Cc Le Lac, Quartier Du Lac, 33300 Bordeaux',
+        ' Bordeaux Mériadeck, Cc Meriadeck, Rue Claude Bonnier, 33000 Bordeaux',
+        ' Bordeaux Bouliac, Ld Bonneau, Rue De La Gabarre, 33270 Bouliac',
+        ' Béziers, Cc Beziers 2 - 4, Voie Domitienne, 34500 Béziers',
+        ' Montpellier, Cc Mediterranee - Route De Carnon, 34470 Pérols',
+        ' Sète, Cc Auchan, Boulevard Camille Blanc, 34200 Sète',
+        ' Châteauroux, Route De Montlucon, 36330 Chateauroux',
+        ' Tours Sud Chambray, Cc Chambray 2, La Vrillonnerie, 37170 Chambray-les-tours',
+        ' Tours - Saint-Cyr-Sur-Loire, Cc Choisille, 37540 Saint-cyr-sur-loire',
+        ' Tours - Nord, Cc Petite Arche, Rn 10, 37100 Tours',
+        ' Blois Vineuil, Cc La Renaissance, 41350 Vineuil',
+        ' St-Étienne Centre 2, Cc Centre Deux, 42100 Saint-etienne',
+        ' Villars Porte Du Forez, Cc Auchan, Chemin De Montravel, 42390 Villars',
+        ' Brives-Charensac, Zi De Corsac, Route De Coubon, 43700 Brives-charensac'
+    ];
 
-    $street = $streetNames[array_rand($streetNames)] . " " . $streetTypes[array_rand($streetTypes)];
-    $houseNumber = rand(1, 9999);
-    $city = $cityNames[array_rand($cityNames)];
-    $zip = $zipCodes[array_rand($zipCodes)];
+    $randomAddress = $addresses[array_rand($addresses)];
 
-    return $houseNumber . " " . $street . ", " . $city . ", " . $zip;
+    return $randomAddress;
 }
+
+// Exemple d'utilisation :
+$randomLocation = generateRandomLastLocation();
+echo $randomLocation;
+
+
 function generateRandomTimeMissing() {
-    $times = ['1 day', '2 days', '3 days', '1 week', '2 weeks'];
-    return $times[array_rand($times)];
+    // Générer un nombre aléatoire de jours, heures et minutes pour la durée de disparition
+    $days = rand(1, 30);
+    $hours = rand(1, 24);
+    $minutes = rand(1, 60);
+
+    // Formater la durée de manière lisible
+    $timeString = '';
+
+    if ($days > 0) {
+        $timeString .= $days . ' jour' . ($days > 1 ? 's' : '') . ' ';
+    }
+
+    if ($hours > 0) {
+        $timeString .= $hours . ' heure' . ($hours > 1 ? 's' : '') . ' ';
+    }
+
+    if ($minutes > 0) {
+        $timeString .= $minutes . ' minute' . ($minutes > 1 ? 's' : '');
+    }
+
+    return trim($timeString);
 }
+
 
 function generateRandomRepeatMissing() {
     $choices = ['Oui', 'Non'];
@@ -261,13 +316,44 @@ function generateRandomRepeatMissing() {
 }
 
 function generateRandomAgencyEnforcement() {
-    $agencies = ['Police', 'Gendarmerie', 'FBI', 'Interpol', 'Private Investigator'];
-    return $agencies[array_rand($agencies)];
+    $agences = [
+        'Police Nationale', 
+        'Gendarmerie Nationale', 
+        'FBI', 
+        'Interpol', 
+        'Détective Privé',
+        'Europol',
+        'DGSI',  // Direction Générale de la Sécurité Intérieure
+        'Police Judiciaire',
+        'GIGN',  // Groupe d'Intervention de la Gendarmerie Nationale
+        'RAID',  // Recherche, Assistance, Intervention, Dissuasion
+        'BRI',   // Brigade de Recherche et d'Intervention
+        'Douanes',
+        'Police des Frontières',
+        'Police Municipale'
+    ];
+    
+    // Sélectionner une agence aléatoire
+    $agenceAleatoire = $agences[array_rand($agences)];
+    
+    return $agenceAleatoire;
 }
 
+
+
+
+
 function generateRandomOfficer() {
-    return 'Officer' . rand(1, 10);
+    $officers = ['Officer 1', 'Officer 2', 'Officer 3', 'Officer 4', 'Officer 5', 'Officer 6', 'Officer 7', 'Officer 8', 'Officer 9', 'Officer 10'];
+    
+    // Sélectionner un officier aléatoire
+    $randomOfficer = $officers[array_rand($officers)];
+    
+    return $randomOfficer;
 }
+
+
+
 
 function generateRandomAgencyPhone() {
     return 'AgencyPhone' . rand(1, 100);
@@ -278,7 +364,7 @@ function generateRandomEmergencyNumber() {
 }
 
 function generateRandomReward() {
-    return rand(100, 10000) . " EUR";
+    return rand(100, 100000) . " EUR";
 }
 function generateRandomFamilyContact() {
     return 'Contact' . rand(1, 100);
@@ -298,8 +384,27 @@ function generateRandomFamilyFB() {
 }
 
 function generateRandomComments() {
-    return 'Comments: Lorem ipsum dolor sit amet, consectetur adipiscing elit.';
+    $comments = [
+        "J'ai vu cette personne il y a quelques jours près du parc. Espérons qu'elle soit retrouvée rapidement. 🙏",
+        "Merci pour cette application ! C'est vraiment un outil utile pour aider les familles à retrouver leurs proches.",
+        "Je signale une disparition dans le quartier. Nous devons rester solidaires et vigilants.",
+        "Alerte ! Une personne disparue a été repérée à proximité du supermarché. Soyez attentifs et informez les autorités.",
+        "C'est effrayant de penser que des gens disparaissent. J'espère que cette application aidera à résoudre ces cas rapidement.",
+        "Je suis rassuré de voir des technologies avancées comme l'IA et la RA utilisées pour des causes aussi importantes que la recherche de personnes disparues.",
+        "Soyez prêts à partager ces alertes sur les réseaux sociaux pour augmenter les chances de retrouver ces personnes.",
+        "Merci pour l'intégration sécurisée avec les réseaux sociaux. Cela facilite la diffusion des alertes et la mobilisation de la communauté.",
+        "L'application est conviviale et facile à utiliser. J'ai pu signaler une disparition en quelques clics.",
+        "Ensemble, nous pouvons faire la différence. Ne sous-estimez jamais le pouvoir de la communauté dans la résolution des cas de disparition."
+    ];
+    
+    // Sélectionner un commentaire aléatoire
+    $randomComment = $comments[array_rand($comments)];
+    
+    return 'Comments: ' . $randomComment;
 }
+
+
+
 
 function generateRandomNameWhoFillUp() {
     return 'Name' . rand(1, 100);
@@ -314,7 +419,7 @@ function generateRandomNameWhoFillUpContact() {
     return 'Contact' . rand(1, 100);
 }
 // Génère 10 profils fictifs
-for ($i = 0; $i < 30; $i++) {
+for ($i = 0; $i < 6; $i++) {
     $admin_Id = rand(1, 10);
     $user_Id = rand(1, 10);
     $city_from = $conn->real_escape_string(generateRandomCity());

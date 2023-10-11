@@ -1,0 +1,2 @@
+2023-10-09 09:43:42,794 - ERROR: Erreur lors de la lecture du fichier de configuration : [Errno 2] No such file or directory: 'config.json'
+2023-10-09 09:44:45,203 - ERROR: Erreur lors de la lecture du fichier de configuration : [Errno 2] No such file or directory: 'IA-PYTHON/config.json'
